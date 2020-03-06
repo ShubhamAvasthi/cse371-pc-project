@@ -26,9 +26,48 @@
     <ClInclude Include="Ensemble.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Stacking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="german.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Bio_Cat2_Avg_evaluation.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Bio_Cat2_Avg_training.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Bio_Cat2_Avg_validation.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Bio_Cat2_Max_evaluation.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Bio_Cat2_Max_training.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Bio_Cat2_Max_validation.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Dig_Cat2_Avg_evaluation.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Dig_Cat2_Avg_training.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Dig_Cat2_Avg_validation.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Dig_Cat2_Max_evaluation.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Dig_Cat2_Max_training.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="11_Dig_Cat2_Max_validation.csv">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

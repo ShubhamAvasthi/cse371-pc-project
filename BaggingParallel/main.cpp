@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 		sampled_labels[j] = train_labels[index];
 	}
 
-	mlpack::tree::DecisionTree<> decision_tree(train, train_labels, num_classes, minimum_leaf_size);
+	mlpack::tree::DecisionTree<> decision_tree(sampled_train, sampled_labels, num_classes, minimum_leaf_size);
 
 	mlpack::data::Save(
 		"BaggingParallelModel_" + std::to_string(ensemble_object_id) + "_" + std::to_string(world_rank) + ".bin",

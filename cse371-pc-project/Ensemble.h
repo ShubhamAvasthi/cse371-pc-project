@@ -29,3 +29,5 @@ public:
 		return correct / double(labels.n_elem);
 	}
 };
+
+std::atomic<int> Ensemble::object_id_cnt = 0;

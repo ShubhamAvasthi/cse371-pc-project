@@ -44,5 +44,3 @@ public:
 		ensemble_predictions.load(("BaggingParallelPredictions_" + std::to_string(object_id) + ".bin").c_str());
 	}
 };
-
-std::atomic<int> Bagging::object_id_cnt = 0;

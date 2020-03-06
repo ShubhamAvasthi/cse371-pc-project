@@ -22,11 +22,24 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="11_Bio_Cat2_Avg_evaluation.csv" />
+    <None Include="11_Bio_Cat2_Avg_training.csv" />
+    <None Include="11_Bio_Cat2_Avg_validation.csv" />
+    <None Include="11_Bio_Cat2_Max_evaluation.csv" />
+    <None Include="11_Bio_Cat2_Max_training.csv" />
+    <None Include="11_Bio_Cat2_Max_validation.csv" />
+    <None Include="11_Dig_Cat2_Avg_evaluation.csv" />
+    <None Include="11_Dig_Cat2_Avg_training.csv" />
+    <None Include="11_Dig_Cat2_Avg_validation.csv" />
+    <None Include="11_Dig_Cat2_Max_evaluation.csv" />
+    <None Include="11_Dig_Cat2_Max_training.csv" />
+    <None Include="11_Dig_Cat2_Max_validation.csv" />
     <None Include="german.csv" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bagging.h" />
     <ClInclude Include="Ensemble.h" />
+    <ClInclude Include="Stacking.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaggingParallelPredict\BaggingParallelPredict.vcxproj">
@@ -35,6 +48,12 @@
     <ProjectReference Include="..\BaggingParallel\BaggingParallel.vcxproj">
       <Project>{116029d0-4e55-40ea-98e6-ab07877650f2}</Project>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <ProjectReference Include="..\StackingParallelPredict\StackingParallelPredict.vcxproj">
+      <Project>{7e03aa18-a888-419b-9e89-4b2df4390da5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\StackingParallelTrain\StackingParallelTrain.vcxproj">
+      <Project>{c785de4f-90a8-435a-8089-941fab2c2333}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -116,11 +135,13 @@
       <Message>Copying parallel projects' executables to the main project's directory</Message>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>copy /Y $(OutputPath)\BaggingParallel.exe $(ProjectDir)
-copy /Y $(OutputPath)\BaggingParallelPredict.exe $(ProjectDir)
-copy /Y $(OutputPath)\mlpack.dll $(ProjectDir)
-copy /Y $(OutputPath)\openblas.dll $(ProjectDir)
-copy /Y $(OutputPath)\boost_serialization-vc141-mt-gd-x64-1_72.dll $(ProjectDir)</Command>
+      <Command>copy /Y $(OutputPath)BaggingParallel.exe $(ProjectDir)
+copy /Y $(OutputPath)BaggingParallelPredict.exe $(ProjectDir)
+copy /Y $(OutputPath)StackingParallelTrain.exe $(ProjectDir)
+copy /Y $(OutputPath)StackingParallelPredict.exe $(ProjectDir)
+copy /Y $(OutputPath)mlpack.dll $(ProjectDir)
+copy /Y $(OutputPath)openblas.dll $(ProjectDir)
+copy /Y $(OutputPath)boost_serialization-vc141-mt-*.dll $(ProjectDir)</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>NonExistentDummyFile.txt;%(Outputs)</Outputs>
@@ -153,6 +174,16 @@ copy /Y $(OutputPath)\boost_serialization-vc141-mt-gd-x64-1_72.dll $(ProjectDir)
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <CustomBuildStep>
+      <Outputs>NonExistentDummyFile.txt;%(Outputs)</Outputs>
+      <Command>copy /Y $(OutputPath)BaggingParallel.exe $(ProjectDir)
+copy /Y $(OutputPath)BaggingParallelPredict.exe $(ProjectDir)
+copy /Y $(OutputPath)StackingParallelTrain.exe $(ProjectDir)
+copy /Y $(OutputPath)StackingParallelPredict.exe $(ProjectDir)
+copy /Y $(OutputPath)mlpack.dll $(ProjectDir)
+copy /Y $(OutputPath)openblas.dll $(ProjectDir)
+copy /Y $(OutputPath)boost_serialization-vc141-mt-*.dll $(ProjectDir)</Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
