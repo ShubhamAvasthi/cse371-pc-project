@@ -20,11 +20,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RandomForestExample.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data.csv" />
     <None Include="german.csv" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bagging.h" />
+    <ClInclude Include="Ensemble.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaggingParallelPredict\BaggingParallelPredict.vcxproj">
+      <Project>{d6de8af5-6e83-449a-bce7-52dd07d90653}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\BaggingParallel\BaggingParallel.vcxproj">
+      <Project>{116029d0-4e55-40ea-98e6-ab07877650f2}</Project>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -92,7 +103,28 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /Y $(OutputPath)\BaggingParallel.exe $(ProjectDir)</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying parallel projects' executables to the main project's directory</Message>
+    </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>copy /Y $(OutputPath)\BaggingParallel.exe $(ProjectDir)
+copy /Y $(OutputPath)\BaggingParallelPredict.exe $(ProjectDir)
+copy /Y $(OutputPath)\mlpack.dll $(ProjectDir)
+copy /Y $(OutputPath)\openblas.dll $(ProjectDir)
+copy /Y $(OutputPath)\boost_serialization-vc141-mt-gd-x64-1_72.dll $(ProjectDir)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>NonExistentDummyFile.txt;%(Outputs)</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

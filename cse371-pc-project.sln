@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cse371-pc-project", "cse371-pc-project\cse371-pc-project.vcxproj", "{BCBCDB58-387A-40B8-9FE6-59C0948B6763}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaggingParallel", "BaggingParallel\BaggingParallel.vcxproj", "{116029D0-4E55-40EA-98E6-AB07877650F2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaggingParallelPredict", "BaggingParallelPredict\BaggingParallelPredict.vcxproj", "{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +25,22 @@ Global
 		{BCBCDB58-387A-40B8-9FE6-59C0948B6763}.Release|x64.Build.0 = Release|x64
 		{BCBCDB58-387A-40B8-9FE6-59C0948B6763}.Release|x86.ActiveCfg = Release|Win32
 		{BCBCDB58-387A-40B8-9FE6-59C0948B6763}.Release|x86.Build.0 = Release|Win32
+		{116029D0-4E55-40EA-98E6-AB07877650F2}.Debug|x64.ActiveCfg = Debug|x64
+		{116029D0-4E55-40EA-98E6-AB07877650F2}.Debug|x64.Build.0 = Debug|x64
+		{116029D0-4E55-40EA-98E6-AB07877650F2}.Debug|x86.ActiveCfg = Debug|Win32
+		{116029D0-4E55-40EA-98E6-AB07877650F2}.Debug|x86.Build.0 = Debug|Win32
+		{116029D0-4E55-40EA-98E6-AB07877650F2}.Release|x64.ActiveCfg = Release|x64
+		{116029D0-4E55-40EA-98E6-AB07877650F2}.Release|x64.Build.0 = Release|x64
+		{116029D0-4E55-40EA-98E6-AB07877650F2}.Release|x86.ActiveCfg = Release|Win32
+		{116029D0-4E55-40EA-98E6-AB07877650F2}.Release|x86.Build.0 = Release|Win32
+		{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}.Debug|x64.ActiveCfg = Debug|x64
+		{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}.Debug|x64.Build.0 = Debug|x64
+		{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}.Debug|x86.ActiveCfg = Debug|Win32
+		{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}.Debug|x86.Build.0 = Debug|Win32
+		{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}.Release|x64.ActiveCfg = Release|x64
+		{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}.Release|x64.Build.0 = Release|x64
+		{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}.Release|x86.ActiveCfg = Release|Win32
+		{D6DE8AF5-6E83-449A-BCE7-52DD07D90653}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
