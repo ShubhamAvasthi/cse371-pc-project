@@ -22,11 +22,13 @@
     <ClCompile Include="Bagging.cpp" />
     <ClCompile Include="Ensemble.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RandomSubspace.cpp" />
     <ClCompile Include="Stacking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bagging.h" />
     <ClInclude Include="Ensemble.h" />
+    <ClInclude Include="RandomSubspace.h" />
     <ClInclude Include="Stacking.h" />
   </ItemGroup>
   <ItemGroup>
@@ -36,6 +38,9 @@
     <ProjectReference Include="..\BaggingParallel\BaggingParallel.vcxproj">
       <Project>{116029d0-4e55-40ea-98e6-ab07877650f2}</Project>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <ProjectReference Include="..\RandomSubspaceParallelTrain\RandomSubspaceParallelTrain.vcxproj">
+      <Project>{820c1feb-ef12-4af5-a3fb-695d3892181a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\StackingParallelPredict\StackingParallelPredict.vcxproj">
       <Project>{7e03aa18-a888-419b-9e89-4b2df4390da5}</Project>

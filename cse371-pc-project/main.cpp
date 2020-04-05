@@ -1,5 +1,6 @@
 #include "Bagging.h"
 #include "Stacking.h"
+#include "RandomSubspace.h"
 #include "mlpack/core.hpp"
 #include "mlpack/core/data/split_data.hpp"
 #include <array>
@@ -11,12 +12,13 @@ int main()
 		"Enter the ensemble to test: \n"
 		"1. Bagging\n"
 		"2. Stacking\n"
+		"3. Random Subspace\n"
 		"\n";
 
 	int choice;
 	std::cin >> choice;
 
-	if (choice != 1 and choice !=  2)
+	if (choice < 1 or choice > 3)
 	{
 		std::cout << "You entered the wrong choice. Exiting.\n";
 		std::system("pause");
@@ -71,6 +73,12 @@ int main()
 			Stacking stacking(train, train_labels, 4, 2);
 			std::cout << "Training Accuracy: " << stacking.get_score(train, train_labels) << '\n';
 			std::cout << "Test Accuracy: " << stacking.get_score(test, test_labels) << '\n';
+		}
+		else if (choice == 3) // Random Subspace
+		{
+			RandomSubspace bagging(train, train_labels, 4, 400, 2);
+			std::cout << "Training Accuracy: " << bagging.get_score(train, train_labels) << '\n';
+			std::cout << "Test Accuracy: " << bagging.get_score(test, test_labels) << '\n';
 		}
 	}
 	std::system("pause");
