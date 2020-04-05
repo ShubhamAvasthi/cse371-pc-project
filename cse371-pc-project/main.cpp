@@ -1,17 +1,15 @@
+#include "Bagging.h"
+#include "Stacking.h"
 #include "mlpack/core.hpp"
 #include "mlpack/core/data/split_data.hpp"
 #include <array>
-#include <cstdlib>
 #include <iostream>
-
-#include "Bagging.h"
-#include "Stacking.h"
 
 int main()
 {	
 	std::cout <<
-		"Enter the ensemble to test: \n" \
-		"1. Bagging\n" \
+		"Enter the ensemble to test: \n"
+		"1. Bagging\n"
 		"2. Stacking\n"
 		"\n";
 
@@ -41,6 +39,9 @@ int main()
 
 	std::array<bool, 4> labels_first = { false, true, true, true };
 
+	std::cout << std::fixed;
+	std::cout.precision(4);
+
 	for (int i = 0; i < 4; i++)
 	{
 		arma::mat train, test;
@@ -67,7 +68,7 @@ int main()
 		}
 		else if (choice == 2) // Stacking
 		{
-			Stacking stacking(train, train_labels, 2, 400, 2);
+			Stacking stacking(train, train_labels, 4, 2);
 			std::cout << "Training Accuracy: " << stacking.get_score(train, train_labels) << '\n';
 			std::cout << "Test Accuracy: " << stacking.get_score(test, test_labels) << '\n';
 		}

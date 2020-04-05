@@ -19,22 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bagging.cpp" />
+    <ClCompile Include="Ensemble.cpp" />
     <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="11_Bio_Cat2_Avg_evaluation.csv" />
-    <None Include="11_Bio_Cat2_Avg_training.csv" />
-    <None Include="11_Bio_Cat2_Avg_validation.csv" />
-    <None Include="11_Bio_Cat2_Max_evaluation.csv" />
-    <None Include="11_Bio_Cat2_Max_training.csv" />
-    <None Include="11_Bio_Cat2_Max_validation.csv" />
-    <None Include="11_Dig_Cat2_Avg_evaluation.csv" />
-    <None Include="11_Dig_Cat2_Avg_training.csv" />
-    <None Include="11_Dig_Cat2_Avg_validation.csv" />
-    <None Include="11_Dig_Cat2_Max_evaluation.csv" />
-    <None Include="11_Dig_Cat2_Max_training.csv" />
-    <None Include="11_Dig_Cat2_Max_validation.csv" />
-    <None Include="german.csv" />
+    <ClCompile Include="Stacking.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bagging.h" />

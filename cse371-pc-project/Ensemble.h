@@ -1,33 +1,41 @@
 #pragma once
 
 #include "mlpack/core.hpp"
-#include <atomic>
+#include <string>
 
 class Ensemble
 {
-protected:
-	static std::atomic<int> object_id_cnt;
+private:
+	static int object_id_cnt;
+
 	const int object_id;
-	const int num_classifiers;
 	const int num_classes;
 
+	virtual const std::string& get_parallel_train_executable_name() = 0;   // Abstract function
+	virtual const std::string& get_parallel_predict_executable_name() = 0; // Abstract function
+
+	const std::string get_test_file_name();
+	const std::string get_predictions_file_name();
+	const std::string get_predict_command();
+
+protected:
+	static const std::string data_files_extension;
+	
+	const int num_classifiers;
+
+	const std::string get_object_data_file_prefix();
+	const std::string get_training_dataset_file_name();
+	const std::string get_training_labels_file_name();
+	const std::string get_train_command_prefix();
+	void train(
+		const arma::mat& train_dataset,
+		const arma::Row<size_t>& train_labels,
+		const std::string& train_command
+	);
+	
+	Ensemble(const int _num_classifiers, const int _num_classes);
+
 public:
-	Ensemble(
-		const int _num_classifiers = 4,
-		const int _num_classes = 2
-	) : object_id(object_id_cnt++),
-		num_classifiers(_num_classifiers),
-		num_classes(_num_classes) {};
-
-	virtual void predict(const arma::mat &X, arma::Row<size_t> &ensemble_predictions) {}
-
-	double get_score(const arma::mat &test, const arma::Row<size_t> &labels)
-	{
-		arma::Row<size_t> predictions;
-		predict(test, predictions);
-		const size_t correct = arma::accu(predictions == labels);
-		return correct / double(labels.n_elem);
-	}
+	void predict(const arma::mat& X, arma::Row<size_t>& ensemble_predictions);
+	double get_score(const arma::mat& test, const arma::Row<size_t>& labels);
 };
-
-std::atomic<int> Ensemble::object_id_cnt = 0;

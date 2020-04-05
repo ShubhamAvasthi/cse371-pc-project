@@ -2,20 +2,19 @@
 #include "mlpack/core.hpp"
 #include "mlpack/methods/decision_tree/decision_tree.hpp"
 #include "mlpack/methods/softmax_regression/softmax_regression.hpp"
-#include <chrono>
-#include <random>
 #include <string>
+
+const std::string data_files_extension = ".bin";
+const std::string get_object_data_file_prefix(const int object_id);
+const std::string get_test_file_name(const int object_id);
+const std::string get_predictions_file_name(const int object_id);
+const std::string get_model_save_file_name(const int object_id, const int world_rank);
+const std::string get_meta_classifier_save_file_name(const int object_id);
 
 int main(int argc, char **argv)
 {
 	// Initialize the MPI environment
 	MPI_Init(&argc, &argv);
-
-	/*
-	for (int i = 0; i < argc; i++)
-		printf("%s ", argv[i]);
-	printf("\n");
-	*/
 
 	// Get the number of processes
 	int world_size;
@@ -28,7 +27,7 @@ int main(int argc, char **argv)
 	const int ensemble_object_id = std::stoi(argv[1]);
 
 	arma::mat X;
-	X.load("StackingParallelPredictX_" + std::to_string(ensemble_object_id) + ".bin");
+	X.load(get_test_file_name(ensemble_object_id));
 
 	arma::Row<size_t> predictions;
 
@@ -39,11 +38,7 @@ int main(int argc, char **argv)
 	if (world_rank == 0)
 	{
 		mlpack::tree::DecisionTree<> decision_tree;
-		mlpack::data::Load(
-			"StackingParallelModel_" + std::to_string(ensemble_object_id) + "_" + std::to_string(world_rank) + ".bin",
-			"model",
-			decision_tree
-		);
+		mlpack::data::Load(get_model_save_file_name(ensemble_object_id, world_rank), "model", decision_tree);
 
 		decision_tree.Classify(X, predictions);
 
@@ -55,11 +50,7 @@ int main(int argc, char **argv)
 	else
 	{
 		mlpack::regression::SoftmaxRegression softmax_regressor;
-		mlpack::data::Load(
-			"StackingParallelModel_" + std::to_string(ensemble_object_id) + "_" + std::to_string(world_rank) + ".bin",
-			"model",
-			softmax_regressor
-		);
+		mlpack::data::Load(get_model_save_file_name(ensemble_object_id, world_rank), "model", softmax_regressor);
 
 		softmax_regressor.Classify(X, predictions);
 
@@ -86,15 +77,11 @@ int main(int argc, char **argv)
 				meta_X(j, i) = all_predictions[j * predictions.n_elem + i];
 
 		mlpack::regression::SoftmaxRegression meta_classifier;
-		mlpack::data::Load(
-			"StackingParallelMetaClassifierModel_" + std::to_string(ensemble_object_id) + ".bin",
-			"model",
-			meta_classifier
-		);
+		mlpack::data::Load(get_meta_classifier_save_file_name(ensemble_object_id), "model", meta_classifier);
 
 		meta_classifier.Classify(meta_X, ensemble_predictions);
 
-		ensemble_predictions.save(("StackingParallelPredictions_" + std::to_string(ensemble_object_id) + ".bin").c_str());
+		ensemble_predictions.save(get_predictions_file_name(ensemble_object_id).c_str());
 		delete all_predictions;
 	}
 
@@ -102,4 +89,29 @@ int main(int argc, char **argv)
 
 	// Finalize the MPI environment.
 	MPI_Finalize();
+}
+
+const std::string get_object_data_file_prefix(const int object_id)
+{
+	return "Ensemble_Object" + std::to_string(object_id);
+}
+
+const std::string get_test_file_name(const int object_id)
+{
+	return get_object_data_file_prefix(object_id) + "_Test" + data_files_extension;
+}
+
+const std::string get_predictions_file_name(const int object_id)
+{
+	return get_object_data_file_prefix(object_id) + "_Predictions" + data_files_extension;
+}
+
+const std::string get_model_save_file_name(const int object_id, const int world_rank)
+{
+	return get_object_data_file_prefix(object_id) + "_Model_" + std::to_string(world_rank) + data_files_extension;
+}
+
+const std::string get_meta_classifier_save_file_name(const int object_id)
+{
+	return get_object_data_file_prefix(object_id) + "_Meta_Classifier_" + data_files_extension;
 }

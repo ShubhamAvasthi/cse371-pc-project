@@ -1,20 +1,18 @@
 #include "mpi.h"
 #include "mlpack/core.hpp"
 #include "mlpack/methods/decision_tree/decision_tree.hpp"
-#include <chrono>
-#include <random>
 #include <string>
+
+const std::string data_files_extension = ".bin";
+const std::string get_object_data_file_prefix(const int object_id);
+const std::string get_test_file_name(const int object_id);
+const std::string get_predictions_file_name(const int object_id);
+const std::string get_model_save_file_name(const int object_id, const int world_rank);
 
 int main(int argc, char **argv)
 {
 	// Initialize the MPI environment
 	MPI_Init(&argc, &argv);
-
-	/*
-	for (int i = 0; i < argc; i++)
-		printf("%s ", argv[i]);
-	printf("\n");
-	*/
 
 	// Get the number of processes
 	int world_size;
@@ -27,14 +25,10 @@ int main(int argc, char **argv)
 	const int ensemble_object_id = std::stoi(argv[1]);
 
 	arma::mat X;
-	X.load("BaggingParallelPredictX_" + std::to_string(ensemble_object_id) + ".bin");
+	X.load(get_test_file_name(ensemble_object_id));
 
 	mlpack::tree::DecisionTree<> decision_tree;
-	mlpack::data::Load(
-		"BaggingParallelModel_" + std::to_string(ensemble_object_id) + "_" + std::to_string(world_rank) + ".bin",
-		"model",
-		decision_tree
-	);
+	mlpack::data::Load(get_model_save_file_name(ensemble_object_id, world_rank), "model", decision_tree);
 
 	arma::Row<size_t> predictions;
 	decision_tree.Classify(X, predictions);
@@ -70,7 +64,7 @@ int main(int argc, char **argv)
 				}
 			ensemble_predictions[i] = max_freq_index;
 		}
-		ensemble_predictions.save(("BaggingParallelPredictions_" + std::to_string(ensemble_object_id) + ".bin").c_str());
+		ensemble_predictions.save(get_predictions_file_name(ensemble_object_id).c_str());
 		delete all_predictions;
 	}
 
@@ -78,4 +72,24 @@ int main(int argc, char **argv)
 
 	// Finalize the MPI environment.
 	MPI_Finalize();
+}
+
+const std::string get_object_data_file_prefix(const int object_id)
+{
+	return "Ensemble_Object" + std::to_string(object_id);
+}
+
+const std::string get_test_file_name(const int object_id)
+{
+	return get_object_data_file_prefix(object_id) + "_Test" + data_files_extension;
+}
+
+const std::string get_predictions_file_name(const int object_id)
+{
+	return get_object_data_file_prefix(object_id) + "_Predictions" + data_files_extension;
+}
+
+const std::string get_model_save_file_name(const int object_id, const int world_rank)
+{
+	return get_object_data_file_prefix(object_id) + "_Model_" + std::to_string(world_rank) + data_files_extension;
 }
