@@ -35,9 +35,11 @@
     <ProjectReference Include="..\BaggingParallelPredict\BaggingParallelPredict.vcxproj">
       <Project>{d6de8af5-6e83-449a-bce7-52dd07d90653}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\BaggingParallel\BaggingParallel.vcxproj">
-      <Project>{116029d0-4e55-40ea-98e6-ab07877650f2}</Project>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+    <ProjectReference Include="..\BaggingParallelTrain\BaggingParallelTrain.vcxproj">
+      <Project>{6ecc6379-4d4d-4a37-a5a5-9c9577043c7d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\RandomSubspaceParallelPredict\RandomSubspaceParallelPredict.vcxproj">
+      <Project>{bc4a7953-4e89-457f-8fd3-69e2d82d4c74}</Project>
     </ProjectReference>
     <ProjectReference Include="..\RandomSubspaceParallelTrain\RandomSubspaceParallelTrain.vcxproj">
       <Project>{820c1feb-ef12-4af5-a3fb-695d3892181a}</Project>
@@ -168,14 +170,11 @@ copy /Y $(OutputPath)boost_serialization-vc141-mt-*.dll $(ProjectDir)</Command>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <CustomBuildStep>
-      <Outputs>NonExistentDummyFile.txt;%(Outputs)</Outputs>
-      <Command>copy /Y $(OutputPath)BaggingParallel.exe $(ProjectDir)
-copy /Y $(OutputPath)BaggingParallelPredict.exe $(ProjectDir)
-copy /Y $(OutputPath)StackingParallelTrain.exe $(ProjectDir)
-copy /Y $(OutputPath)StackingParallelPredict.exe $(ProjectDir)
-copy /Y $(OutputPath)mlpack.dll $(ProjectDir)
+      <Outputs>$(OutputPath)mlpack.dll;$(OutputPath)openblas.dll;$(OutputPath)boost_serialization-vc141-mt-*.dll;%(Outputs)</Outputs>
+      <Command>copy /Y $(OutputPath)mlpack.dll $(ProjectDir)
 copy /Y $(OutputPath)openblas.dll $(ProjectDir)
 copy /Y $(OutputPath)boost_serialization-vc141-mt-*.dll $(ProjectDir)</Command>
+      <Message>Custom Build Step to Copy Relevant DLL Files</Message>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,7 +1,7 @@
 #include "RandomSubspace.h"
 
-const std::string RandomSubspace::parallel_train_executable_name = "BaggingParallel.exe";
-const std::string RandomSubspace::parallel_predict_executable_name = "BaggingParallelPredict.exe";
+const std::string RandomSubspace::parallel_train_executable_name = "RandomSubspaceParallelTrain.exe";
+const std::string RandomSubspace::parallel_predict_executable_name = "RandomSubspaceParallelPredict.exe";
 
 const std::string& RandomSubspace::get_parallel_train_executable_name()
 {

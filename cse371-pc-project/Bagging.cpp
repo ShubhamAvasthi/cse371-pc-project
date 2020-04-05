@@ -1,6 +1,6 @@
 #include "Bagging.h"
 
-const std::string Bagging::parallel_train_executable_name = "BaggingParallel.exe";
+const std::string Bagging::parallel_train_executable_name = "BaggingParallelTrain.exe";
 const std::string Bagging::parallel_predict_executable_name = "BaggingParallelPredict.exe";
 
 const std::string& Bagging::get_parallel_train_executable_name()
