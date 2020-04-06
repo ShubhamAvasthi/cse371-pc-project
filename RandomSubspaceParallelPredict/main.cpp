@@ -8,6 +8,7 @@ const std::string get_object_data_file_prefix(const int object_id);
 const std::string get_test_file_name(const int object_id);
 const std::string get_predictions_file_name(const int object_id);
 const std::string get_model_save_file_name(const int object_id, const int world_rank);
+const std::string get_model_sampled_features_save_file_name(const int object_id, const int world_rank);
 
 int main(int argc, char **argv)
 {
@@ -27,11 +28,17 @@ int main(int argc, char **argv)
 	arma::mat X;
 	X.load(get_test_file_name(ensemble_object_id));
 
+	arma::Col<size_t> sampled_features;
+	sampled_features.load(get_model_sampled_features_save_file_name(ensemble_object_id, world_rank));
 	mlpack::tree::DecisionTree<> decision_tree;
 	mlpack::data::Load(get_model_save_file_name(ensemble_object_id, world_rank), "model", decision_tree);
 
+	arma::mat sampled_X(sampled_features.n_elem, X.n_cols);
+	for (int i = 0; i < sampled_features.n_elem; i++)
+		sampled_X.row(i) = X.row(sampled_features(i));
+
 	arma::Row<size_t> predictions;
-	decision_tree.Classify(X, predictions);
+	decision_tree.Classify(sampled_X, predictions);
 
 	int *sub_predictions = new int[predictions.n_elem];
 	for (int i = 0; i < predictions.n_elem; i++)
@@ -92,4 +99,9 @@ const std::string get_predictions_file_name(const int object_id)
 const std::string get_model_save_file_name(const int object_id, const int world_rank)
 {
 	return get_object_data_file_prefix(object_id) + "_Model_" + std::to_string(world_rank) + data_files_extension;
+}
+
+const std::string get_model_sampled_features_save_file_name(const int object_id, const int world_rank)
+{
+	return get_object_data_file_prefix(object_id) + "_Model_Sampled_Features_" + std::to_string(world_rank) + data_files_extension;
 }

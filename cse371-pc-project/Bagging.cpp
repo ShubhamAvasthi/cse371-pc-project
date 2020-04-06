@@ -18,7 +18,7 @@ const std::string Bagging::get_model_save_file_name(const int model_num)
 	return get_object_data_file_prefix() + "_Model_" + std::to_string(model_num) + data_files_extension;
 }
 
-const std::string Bagging::get_train_command(int sample_size, int minimum_leaf_size)
+const std::string Bagging::get_train_command(const int sample_size, const int minimum_leaf_size)
 {
 	return get_train_command_prefix() + ' ' + std::to_string(sample_size) + ' ' + std::to_string(minimum_leaf_size);
 }

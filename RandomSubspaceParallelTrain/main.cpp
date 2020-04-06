@@ -9,6 +9,7 @@ const std::string get_object_data_file_prefix(const int object_id);
 const std::string get_training_dataset_file_name(const int object_id);
 const std::string get_training_labels_file_name(const int object_id);
 const std::string get_model_save_file_name(const int object_id, const int world_rank);
+const std::string get_model_sampled_features_save_file_name(const int object_id, const int world_rank);
 
 int main(int argc, char **argv)
 {
@@ -21,7 +22,7 @@ int main(int argc, char **argv)
 
 	const int num_classes = std::stoi(argv[1]);
 	const int ensemble_object_id = std::stoi(argv[2]);
-	const int sample_size = std::stoi(argv[3]);
+	const int feature_sample_size = std::stoi(argv[3]);
 	const int minimum_leaf_size = std::stoi(argv[4]);
 
 	arma::mat train;
@@ -31,19 +32,20 @@ int main(int argc, char **argv)
 
 	std::default_random_engine generator(world_rank);
 
-	const std::uniform_int_distribution<> distribution(0, train.n_cols - 1); // Training examples are present columnwise
+	const std::uniform_int_distribution<> distribution(0, train.n_rows - 1); // Training examples are present columnwise
 
-	arma::mat sampled_train(train.n_rows, sample_size);
-	arma::Row<size_t> sampled_labels(sample_size);
-	for (int j = 0; j < sample_size; j++)
+	arma::Col<size_t> sampled_features(feature_sample_size);
+	arma::mat sampled_train(feature_sample_size, train.n_cols);
+	for (int i = 0; i < feature_sample_size; i++)
 	{
 		int index = distribution(generator);
-		sampled_train.col(j) = train.col(index);
-		sampled_labels[j] = train_labels[index];
+		sampled_train.row(i) = train.row(index);
+		sampled_features(i) = index;
 	}
 
-	mlpack::tree::DecisionTree<> decision_tree(sampled_train, sampled_labels, num_classes, minimum_leaf_size);
+	mlpack::tree::DecisionTree<> decision_tree(sampled_train, train_labels, num_classes, minimum_leaf_size);
 	mlpack::data::Save(get_model_save_file_name(ensemble_object_id, world_rank), "model", decision_tree);
+	sampled_features.save(get_model_sampled_features_save_file_name(ensemble_object_id, world_rank));
 
 	// Finalize the MPI environment.
 	MPI_Finalize();
@@ -67,4 +69,9 @@ const std::string get_training_labels_file_name(const int object_id)
 const std::string get_model_save_file_name(const int object_id, const int world_rank)
 {
 	return get_object_data_file_prefix(object_id) + "_Model_" + std::to_string(world_rank) + data_files_extension;
+}
+
+const std::string get_model_sampled_features_save_file_name(const int object_id, const int world_rank)
+{
+	return get_object_data_file_prefix(object_id) + "_Model_Sampled_Features_" + std::to_string(world_rank) + data_files_extension;
 }
