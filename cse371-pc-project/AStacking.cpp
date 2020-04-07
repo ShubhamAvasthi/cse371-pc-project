@@ -1,34 +1,34 @@
-#include "Stacking.h"
+#include "AStacking.h"
 
-const std::string Stacking::parallel_train_executable_name = "StackingParallelTrain.exe";
-const std::string Stacking::parallel_predict_executable_name = "StackingParallelPredict.exe";
+const std::string AStacking::parallel_train_executable_name = "AStackingParallelTrain.exe";
+const std::string AStacking::parallel_predict_executable_name = "AStackingParallelPredict.exe";
 
-const std::string& Stacking::get_parallel_train_executable_name()
+const std::string& AStacking::get_parallel_train_executable_name()
 {
 	return parallel_train_executable_name;
 }
 
-const std::string& Stacking::get_parallel_predict_executable_name()
+const std::string& AStacking::get_parallel_predict_executable_name()
 {
 	return parallel_predict_executable_name;
 }
 
-const std::string Stacking::get_model_save_file_name(const int model_num)
+const std::string AStacking::get_model_save_file_name(const int model_num)
 {
 	return get_object_data_file_prefix() + "_Model_" + std::to_string(model_num) + data_files_extension;
 }
 
-const std::string Stacking::get_meta_classifier_save_file_name()
+const std::string AStacking::get_meta_classifier_save_file_name()
 {
 	return get_object_data_file_prefix() + "_Meta_Classifier" + data_files_extension;
 }
 
-const std::string Stacking::get_train_command()
+const std::string AStacking::get_train_command()
 {
 	return get_train_command_prefix();
 }
 
-Stacking::Stacking(
+AStacking::AStacking(
 	const arma::mat& train_dataset,
 	const arma::Row<size_t>& train_labels,
 	const int num_classifiers,
@@ -38,7 +38,7 @@ Stacking::Stacking(
 	train(train_dataset, train_labels, get_train_command());
 }
 
-Stacking::~Stacking()
+AStacking::~AStacking()
 {
 	for (int i = 0; i < num_classifiers; i++)
 		std::remove(get_model_save_file_name(i).c_str());

@@ -19,52 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ABagging.cpp" />
-    <ClCompile Include="AStacking.cpp" />
-    <ClCompile Include="Bagging.cpp" />
-    <ClCompile Include="Ensemble.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RandomSubspace.cpp" />
-    <ClCompile Include="Stacking.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ABagging.h" />
-    <ClInclude Include="AStacking.h" />
-    <ClInclude Include="Bagging.h" />
-    <ClInclude Include="Ensemble.h" />
-    <ClInclude Include="RandomSubspace.h" />
-    <ClInclude Include="Stacking.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AStackingParallelPredict\AStackingParallelPredict.vcxproj">
-      <Project>{06573836-e6be-4ad3-ab0d-6d5b299c63fd}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\AStackingParallelTrain\AStackingParallelTrain.vcxproj">
-      <Project>{9346f2ae-0e6e-46cf-ac22-cff79418ff8b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\BaggingParallelPredict\BaggingParallelPredict.vcxproj">
-      <Project>{d6de8af5-6e83-449a-bce7-52dd07d90653}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\BaggingParallelTrain\BaggingParallelTrain.vcxproj">
-      <Project>{6ecc6379-4d4d-4a37-a5a5-9c9577043c7d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\RandomSubspaceParallelPredict\RandomSubspaceParallelPredict.vcxproj">
-      <Project>{bc4a7953-4e89-457f-8fd3-69e2d82d4c74}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\RandomSubspaceParallelTrain\RandomSubspaceParallelTrain.vcxproj">
-      <Project>{820c1feb-ef12-4af5-a3fb-695d3892181a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\StackingParallelPredict\StackingParallelPredict.vcxproj">
-      <Project>{7e03aa18-a888-419b-9e89-4b2df4390da5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\StackingParallelTrain\StackingParallelTrain.vcxproj">
-      <Project>{c785de4f-90a8-435a-8089-941fab2c2333}</Project>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{BCBCDB58-387A-40B8-9FE6-59C0948B6763}</ProjectGuid>
-    <RootNamespace>cse371pcproject</RootNamespace>
+    <ProjectGuid>{9346F2AE-0E6E-46CF-AC22-CFF79418FF8B}</ProjectGuid>
+    <RootNamespace>AStackingParallelTrain</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -101,18 +61,37 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\mpi_config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\mpi_config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\mpi_config.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\mpi_config.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -120,6 +99,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -127,30 +109,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
-    <PostBuildEvent>
-      <Command>copy /Y $(OutputPath)\BaggingParallel.exe $(ProjectDir)</Command>
-    </PostBuildEvent>
-    <PostBuildEvent>
-      <Message>Copying parallel projects' executables to the main project's directory</Message>
-    </PostBuildEvent>
-    <CustomBuildStep>
-      <Command>copy /Y $(OutputPath)BaggingParallel.exe $(ProjectDir)
-copy /Y $(OutputPath)BaggingParallelPredict.exe $(ProjectDir)
-copy /Y $(OutputPath)StackingParallelTrain.exe $(ProjectDir)
-copy /Y $(OutputPath)StackingParallelPredict.exe $(ProjectDir)
-copy /Y $(OutputPath)mlpack.dll $(ProjectDir)
-copy /Y $(OutputPath)openblas.dll $(ProjectDir)
-copy /Y $(OutputPath)boost_serialization-vc141-mt-*.dll $(ProjectDir)</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>NonExistentDummyFile.txt;%(Outputs)</Outputs>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -162,30 +124,10 @@ copy /Y $(OutputPath)boost_serialization-vc141-mt-*.dll $(ProjectDir)</Command>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
-    <Link>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-    <CustomBuildStep>
-      <Outputs>$(OutputPath)mlpack.dll;$(OutputPath)openblas.dll;$(OutputPath)boost_serialization-vc141-mt-*.dll;%(Outputs)</Outputs>
-      <Command>copy /Y $(OutputPath)mlpack.dll $(ProjectDir)
-copy /Y $(OutputPath)openblas.dll $(ProjectDir)
-copy /Y $(OutputPath)boost_serialization-vc141-mt-*.dll $(ProjectDir)</Command>
-      <Message>Custom Build Step to Copy Relevant DLL Files</Message>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

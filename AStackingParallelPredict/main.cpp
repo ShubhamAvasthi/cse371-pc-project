@@ -30,31 +30,23 @@ int main(int argc, char **argv)
 	X.load(get_test_file_name(ensemble_object_id));
 
 	arma::Row<size_t> predictions;
+	mlpack::tree::DecisionTree<> decision_tree;
+	mlpack::regression::SoftmaxRegression softmax_regressor;
 
-	int *sub_predictions = nullptr;
-
-	if (world_rank == 0)
+	try
 	{
-		mlpack::tree::DecisionTree<> decision_tree;
-		mlpack::data::Load(get_model_save_file_name(ensemble_object_id, world_rank), "model", decision_tree);
-
+		mlpack::data::Load(get_model_save_file_name(ensemble_object_id, world_rank), "decision_tree_model", decision_tree, true);
 		decision_tree.Classify(X, predictions);
-
-		sub_predictions = new int[predictions.n_elem];
-		for (int i = 0; i < predictions.n_elem; i++)
-			sub_predictions[i] = predictions[i];
 	}
-	else
+	catch (...)
 	{
-		mlpack::regression::SoftmaxRegression softmax_regressor;
-		mlpack::data::Load(get_model_save_file_name(ensemble_object_id, world_rank), "model", softmax_regressor);
-
+		mlpack::data::Load(get_model_save_file_name(ensemble_object_id, world_rank), "softmax_regressor_model", softmax_regressor, true);
 		softmax_regressor.Classify(X, predictions);
-
-		sub_predictions = new int[predictions.n_elem];
-		for (int i = 0; i < predictions.n_elem; i++)
-			sub_predictions[i] = predictions[i];
 	}
+
+	int *sub_predictions = new int[predictions.n_elem];
+	for (int i = 0; i < predictions.n_elem; i++)
+		sub_predictions[i] = predictions[i];
 
 	int *all_predictions = nullptr;
 
@@ -63,10 +55,10 @@ int main(int argc, char **argv)
 
 	MPI_Gather(sub_predictions, predictions.n_elem, MPI_INT, all_predictions, predictions.n_elem, MPI_INT, 0, MPI_COMM_WORLD);
 
+	delete sub_predictions;
+
 	if (world_rank == 0)
 	{
-		arma::Row<size_t> ensemble_predictions;
-		
 		arma::mat meta_X(world_size, predictions.n_elem);
 
 		for (int i = 0; i < predictions.n_elem; i++)
@@ -76,13 +68,12 @@ int main(int argc, char **argv)
 		mlpack::regression::SoftmaxRegression meta_classifier;
 		mlpack::data::Load(get_meta_classifier_save_file_name(ensemble_object_id), "model", meta_classifier);
 
+		arma::Row<size_t> ensemble_predictions;
 		meta_classifier.Classify(meta_X, ensemble_predictions);
 
 		ensemble_predictions.save(get_predictions_file_name(ensemble_object_id).c_str());
 		delete all_predictions;
 	}
-
-	delete sub_predictions;
 
 	// Finalize the MPI environment.
 	MPI_Finalize();

@@ -30,6 +30,12 @@
     <ClCompile Include="RandomSubspace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AStacking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ABagging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bagging.h">
@@ -42,6 +48,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RandomSubspace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AStacking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ABagging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
