@@ -19,7 +19,8 @@ public:
 		const arma::mat& train,
 		const arma::Row<size_t>& train_labels,
 		const int num_classifiers,
-		const int num_classes = 2
+		const int num_classes = 2,
+		const int num_processes = -1
 	);
 	~Stacking();
 };

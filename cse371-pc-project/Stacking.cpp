@@ -32,8 +32,9 @@ Stacking::Stacking(
 	const arma::mat& train_dataset,
 	const arma::Row<size_t>& train_labels,
 	const int num_classifiers,
-	const int num_classes
-) : Ensemble(num_classifiers, num_classes)
+	const int num_classes,
+	const int num_processes
+) : Ensemble(num_classifiers, num_classes, num_processes)
 {
 	train(train_dataset, train_labels, get_train_command());
 }

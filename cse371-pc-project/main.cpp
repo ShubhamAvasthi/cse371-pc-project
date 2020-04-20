@@ -68,7 +68,7 @@ int main()
 
 		if (choice == 1) // Bagging
 		{
-			Bagging bagging(train, train_labels, 4, 400, 2);
+			Bagging bagging(train, train_labels, 4, 400, 2, 5);
 			std::cout << "Training Accuracy: " << bagging.get_score(train, train_labels) << '\n';
 			std::cout << "Test Accuracy: " << bagging.get_score(test, test_labels) << '\n';
 		}
@@ -80,7 +80,7 @@ int main()
 		}
 		else if (choice == 3) // Random Subspace
 		{
-			RandomSubspace random_subspace(train, train_labels, 4, 500, 2);
+			RandomSubspace random_subspace(train, train_labels, 4, 500, 2, 5);
 			std::cout << "Training Accuracy: " << random_subspace.get_score(train, train_labels) << '\n';
 			std::cout << "Test Accuracy: " << random_subspace.get_score(test, test_labels) << '\n';
 		}

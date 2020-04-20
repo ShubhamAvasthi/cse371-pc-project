@@ -10,6 +10,7 @@ private:
 
 	const int object_id;
 	const int num_classes;
+	const int num_processes;
 
 	virtual const std::string& get_parallel_train_executable_name() = 0;   // Abstract function
 	virtual const std::string& get_parallel_predict_executable_name() = 0; // Abstract function
@@ -33,7 +34,7 @@ protected:
 		const std::string& train_command
 	);
 	
-	Ensemble(const int _num_classifiers, const int _num_classes);
+	Ensemble(const int _num_classifiers, const int _num_classes, const int _num_processes = -1);
 
 public:
 	void predict(const arma::mat& X, arma::Row<size_t>& ensemble_predictions);

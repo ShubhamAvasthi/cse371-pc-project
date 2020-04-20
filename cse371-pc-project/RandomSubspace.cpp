@@ -34,8 +34,9 @@ RandomSubspace::RandomSubspace(
 	const int num_classifiers,
 	const int feature_sample_size,
 	const int num_classes,
-	const int minimum_leaf_size
-) : Ensemble(num_classifiers, num_classes)
+	const int minimum_leaf_size,
+	const int num_processes
+) : Ensemble(num_classifiers, num_classes, num_processes)
 {
 	train(train_dataset, train_labels, get_train_command(feature_sample_size, minimum_leaf_size));
 }

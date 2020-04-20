@@ -20,7 +20,8 @@ public:
 		const int num_classifiers,
 		const int sample_size,
 		const int num_classes = 2,
-		const int minimum_leaf_size = 5
+		const int minimum_leaf_size = 5,
+		const int num_processes = -1
 	);
 	~Bagging();
 };
