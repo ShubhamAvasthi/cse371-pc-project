@@ -29,7 +29,7 @@ int main()
 		return 0;
 	}
 
-	std::array<std::string, 4> training_datasets = {
+	/*std::array<std::string, 4> training_datasets = {
 		"Test_Datasets\\11_Bio_Cat2_Avg_training.csv",
 		"Test_Datasets\\11_Bio_Cat2_Max_training.csv",
 		"Test_Datasets\\11_Dig_Cat2_Avg_training.csv",
@@ -43,28 +43,37 @@ int main()
 		"Test_Datasets\\11_Dig_Cat2_Max_evaluation.csv"
 	};
 
-	std::array<bool, 4> labels_first = { false, true, true, true };
+	std::array<bool, 4> labels_first = { false, true, true, true };*/
 
 	std::cout << std::fixed;
 	std::cout.precision(4);
 
-	for (int i = 0; i < 4; i++)
+	// for (int i = 0; i < 4; i++)
 	{
 		arma::mat train, test;
-		mlpack::data::Load(training_datasets[i], train);
+		arma::Row<size_t> train_labels, test_labels;
+		mlpack::data::Load("Test_Datasets\\hate_speech_train_x.csv", train);
+		mlpack::data::Load("Test_Datasets\\hate_speech_train_y.csv", train_labels);
+		mlpack::data::Load("Test_Datasets\\hate_speech_test_x.csv", test);
+		mlpack::data::Load("Test_Datasets\\hate_speech_test_y.csv", test_labels);
+
+		// std::cerr << train.n_rows << ' ' << train.n_cols << '\n';
+		// std::cerr << test.n_rows << ' ' << test.n_cols << '\n';
+
+		/*mlpack::data::Load(training_datasets[i], train);
 		mlpack::data::Load(test_datasets[i], test);
 
 		// Ignore the first row of the input (the first column of the matrix)
 		train.shed_col(0);
-		test.shed_col(0);
+		test.shed_col(0);*/
 
-		int labels_row = (labels_first[i] ? 0 : train.n_rows - 1);
+		/*int labels_row = (labels_first[i] ? 0 : train.n_rows - 1);
 		const arma::Row<size_t> train_labels(arma::conv_to<arma::Row<size_t>>::from(train.row(labels_row)));
 		train.shed_row(labels_row);
 
 		labels_row = (labels_first[i] ? 0 : test.n_rows - 1);
 		const arma::Row<size_t> test_labels(arma::conv_to<arma::Row<size_t>>::from(test.row(labels_row)));
-		test.shed_row(labels_row);
+		test.shed_row(labels_row);*/
 
 		if (choice == 1) // Bagging
 		{
